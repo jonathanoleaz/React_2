@@ -44,6 +44,7 @@ import {Searchbox} from "./components/search-box/search-box.component";
         )
       return (
         <div className="App">
+          <h1>Monsters app test</h1>
           <Searchbox
             placeholder="Search monsters"
             handleChange={this.handleChange}

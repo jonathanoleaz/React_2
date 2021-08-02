@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+h1{
+  font-family: 'Staatliches';
+  font-size: 40px;
+  color: #553D36;
+}
