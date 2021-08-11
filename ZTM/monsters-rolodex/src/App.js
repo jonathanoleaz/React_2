@@ -9,7 +9,8 @@ import {Searchbox} from "./components/search-box/search-box.component";
       super();
       this.state = {
         monsters: [],
-        searchField: ''
+        searchField: '',
+        title: ''
       };
 
       /**
@@ -32,24 +33,25 @@ import {Searchbox} from "./components/search-box/search-box.component";
 
 
     handleChange(e){
-      this.setState({ searchField: e.target.value });
+      this.setState({ searchField: e.target.value,
+        title: e.target.value });
 
     }
 
     
     render() {
-      const { monsters, searchField } = this.state;
-      const filteredMonsters = monsters.filter(monster =>
+      const { monsters, searchField, title } = this.state;
+      /*const filteredMonsters = monsters.filter(monster =>
         monster.name.toLowerCase().includes(searchField.toLowerCase())
-        )
+        )*/
       return (
         <div className="App">
-          <h1>Monsters app test</h1>
+          <h1>{title}</h1>
           <Searchbox
             placeholder="Search monsters"
             handleChange={this.handleChange}
           />
-          <CardList monsters={filteredMonsters}/>
+          <CardList monsters={monsters}/>
           
         </div>
       );
