@@ -8,16 +8,19 @@ import Header from './components/header/header.component';
 import SignInSingUpPage from './pages/sign-in-sign-up/sign-in-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import React from 'react';
+import { connect } from 'react-redux';
+import {setCurrentUser} from './redux/user/user.actions';
 
 class App extends React.Component {
 
-  constructor(){
+  /**we do not initialize the currentUser inside this component because now that is done through mapDispatchToProps function using redux */
+  /*constructor(){
     super();
 
     this.state={
       currentUser: null
     }
-  }
+  }*/
 
   unsuscribeFromAuth=null;
 
@@ -27,6 +30,8 @@ class App extends React.Component {
    * Note that the 'onAuthStateChanged' function returns the unsuscribe function function for the observer (which allow us to stop that observer)
    */
   componentDidMount(){
+    const {setCurrentUser} = this.props;
+
     this.unsuscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       /*this.setState({ currentUser: user });*/
       //createUserProfileDocument(user);
@@ -34,18 +39,16 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState({
+          setCurrentUser({
             currentUser:{
               id: snapShot.id,
               ...snapShot.data()
             }
           })
-
-          console.log(this.state);
         });
       }
       else{
-        this.setState({currentUser: userAuth});
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -58,7 +61,7 @@ class App extends React.Component {
   render(){ 
     return(
     <div className="App">
-      <Header currentUser={this.state.currentUser} />
+      <Header /*currentUser={this.state.currentUser}*/ />     {/*we aren't apssing the currentUser prop because the currentUser now is provided by redux using connect  */}
       
         <Switch>
           <Route exact path='/' component={HomePage}/>
@@ -70,4 +73,9 @@ class App extends React.Component {
   )};
 }
 
-export default App;
+/**we are mapping each function to component props */
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);
