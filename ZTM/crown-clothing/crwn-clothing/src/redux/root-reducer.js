@@ -6,6 +6,7 @@ import { combineReducers } from "redux";
 import cartReducer from "./cart/cart.reducer";
 import userReducer from "./user/user.reducer";
 import directoryReducer from "./directory/directory.reducer";
+import shopReducer from "../redux/shop/shop.reducer"
 
 /** 'key' is at which point of the store we want to start persisting,
  * 'whitelist' s an array of the store items we want to persist
@@ -19,7 +20,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
-    directory: directoryReducer
+    directory: directoryReducer,
+    shop: shopReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
