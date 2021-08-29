@@ -1,16 +1,18 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+
 import Header from './components/header/header.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { addCollectionAndDocuments, auth, createUserProfileDocument } from './firebase/firebase.utils';
 import CheckoutPage from './pages/checkout/checkout.component';
 //import './homepage.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInSingUpPage from './pages/sign-in-sign-up/sign-in-sign-up.component';
+import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
 
 import './App.css';
 
@@ -33,7 +35,8 @@ class App extends React.Component {
    * Note that the 'onAuthStateChanged' function returns the unsuscribe function function for the observer (which allow us to stop that observer)
    */
   componentDidMount(){
-    const {setCurrentUser} = this.props;
+
+    const {setCurrentUser/*, collectionsArray*/} = this.props;
 
     this.unsuscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       /*this.setState({ currentUser: user });*/
@@ -52,6 +55,7 @@ class App extends React.Component {
       }
       else{
         setCurrentUser(userAuth);
+        /*addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items}) ));*/
       }
     });
   }
@@ -80,8 +84,9 @@ class App extends React.Component {
 const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser
 })*/
-const mapStateToProps = createStructuredSelector ({
-  currentUser: selectCurrentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  collectionsArray: selectCollectionsForPreview
 })
 
 /**we are mapping each 'dispatching' function to component props */
