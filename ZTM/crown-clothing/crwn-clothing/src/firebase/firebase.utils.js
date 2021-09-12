@@ -90,6 +90,14 @@ const config = {
 
   firebase.initializeApp(config);
 
+  export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsuscribe = auth.onAuthStateChanged(userAuth => {
+        unsuscribe();
+        resolve(userAuth);
+      }, reject)
+    });
+  }
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
 
