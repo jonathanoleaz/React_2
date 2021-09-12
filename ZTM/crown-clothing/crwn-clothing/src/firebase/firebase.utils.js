@@ -98,6 +98,23 @@ const config = {
       }, reject)
     });
   }
+
+  export const createUserWithEmailAndPassword = (email, password) => {
+    return new Promise((resolve, reject) => {
+      auth.createUserWithEmailAndPassword(email, password).then( user =>{
+          resolve(user);
+        }, reject)
+    });
+  }
+
+  export const createUserProfileDocumentPromised = (user, displayName) => {
+    return new Promise((resolve, reject) => {
+      createUserProfileDocument(user, displayName).then( userRef =>{
+        resolve(userRef);
+      }, reject)
+    });
+  }
+
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
 
