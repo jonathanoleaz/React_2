@@ -10,14 +10,14 @@ import { signUpStart } from '../../redux/user/user.actions';
 import './sign-up.styles.scss';
 
 const SignUp = ({signUpStart}) =>{
-    const [userSignUpData, setUserCredentials] = useState({
+    const [userCredentials, setUserCredentials] = useState({
         displayName: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
 
-    const {displayName, email, password, confirmPassword} = userSignUpData;
+    const {displayName, email, password, confirmPassword} = userCredentials;
     const handleSubmit = async event => {
         event.preventDefault();
 
@@ -45,7 +45,7 @@ const SignUp = ({signUpStart}) =>{
     const handleChange = event =>{
         const {name, value} = event.target;
 
-        setUserCredentials({...userSignUpData, [name]: value});
+        setUserCredentials({...userCredentials, [name]: value});
     }
 
         return(

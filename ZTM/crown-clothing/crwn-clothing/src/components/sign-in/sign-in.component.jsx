@@ -8,9 +8,9 @@ import './sign-in.styles.scss';
 import {googleSignInStart, emailSignInStart} from '../../redux/user/user.actions';
 
 const SignIn = ({ emailSignInStart, googleSignInStart }) => {
-    const [userSignUpData, setCredentials] = useState({ email: '', password: '' })
+    const [userCredentials, setCredentials] = useState({ email: '', password: '' })
 
-    const { email, password } = userSignUpData;
+    const { email, password } = userCredentials;
 
     const handleSubmit = async event =>{
         event.preventDefault();
@@ -34,7 +34,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     const handleChange = event =>{
         const { value, name } = event.target;
 
-        setCredentials( {...userSignUpData,[name]: value} );
+        setCredentials( {...userCredentials,[name]: value} );
     }
 
     return(

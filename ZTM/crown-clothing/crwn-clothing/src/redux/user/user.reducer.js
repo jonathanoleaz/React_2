@@ -27,13 +27,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return{
                 ...state,
                 isFetching: true,
-                userSignUpData: action.payload
+                userCredentials: action.payload
             }
         case UserActionTypes.SIGN_UP_SUCCESS:
             return{
                 ...state,
                 isFetching: false,
-                userSignUpData: null
+                userCredentials: null
             }
         default:
             return state;
