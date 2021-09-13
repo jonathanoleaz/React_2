@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
@@ -8,27 +8,21 @@ import CollectionPageContainer from '../collection/collection.container';
 
 /*const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);*/
 
-class ShopPage extends React.Component {
-    /* constructor method is run by react */
+const ShopPage = ({fetchCollectionsStart, match}) => {
     
-    unsuscribeFromSnapshot = null;
-    
-    componentDidMount(){
-        const {fetchCollectionsStart} = this.props;
+    /*we pass fetchCollectionStart as second parameter to avoid to run twice the useEffect functions 
+    (because in App.js, the parent component, changes the user property of the state) */
+    useEffect(() => {
         fetchCollectionsStart();
-    }
+    }, [fetchCollectionsStart]);
 
     /*with match.path we get the current path of the component */
-    render(){
-        const { match } = this.props;
-        
-        return(
-            <div className='shop-page'>
-                <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
-                <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
-            </div>
-        );
-    }
+    return(
+        <div className='shop-page'>
+            <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+            <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
+        </div>
+    );
 };
 
 const mapDispatchToProps = dispatch => ({
