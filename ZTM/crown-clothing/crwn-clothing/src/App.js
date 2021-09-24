@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
@@ -16,7 +16,17 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import './App.css';
 
-const App = ({ checkUserSession, currentUser }) =>  {
+const App = () =>  {
+ /**Using useSelector the components receive the updated property given by the selector */
+  const currentUser = useSelector(selectCurrentUser);
+  const isHidden = useSelector((state) => state.cart.hidden);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserSession())
+  }, [dispatch])
+
 
   /**we do not initialize the currentUser inside this component because now that is done through mapDispatchToProps function using redux */
   /*constructor(){
@@ -27,9 +37,6 @@ const App = ({ checkUserSession, currentUser }) =>  {
     }
   }*/
 
-  useEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
 
   /*unsuscribeFromAuth=null;*/
 
@@ -86,15 +93,15 @@ const App = ({ checkUserSession, currentUser }) =>  {
 /**we are mapping each state props to component props 
 const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser
-})*/
+})
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   collectionsArray: selectCollectionsForPreview
-})
+})*/
 
-/**we are mapping each 'dispatching' function to component props */
+/**we are mapping each 'dispatching' function to component props 
 const mapDispatchToProps = dispatch => ({
   checkUserSession: () => dispatch(checkUserSession())
-})
+})*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
