@@ -9,7 +9,7 @@
     "client": "cd crwn-clothing && npm start",
     "server": "nodemon server.js",
     "build": "cd crwn-clothing && npm run build",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev": "concurrently --kill-others-on-fail \"npm server\" \"npm client\"",
     "start": "node server.js",
     "heroku-postbuild": "cd crwn-clothing && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
