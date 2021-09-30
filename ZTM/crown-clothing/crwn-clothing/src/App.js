@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { addCollectionAndDocuments, auth, createUserProfileDocument } from './firebase/firebase.utils';
 /*import CheckoutPage from './pages/checkout/checkout.component';*/
@@ -92,12 +93,14 @@ const App = () =>  {
       <Header /*currentUser={this.state.currentUser}*/ />     {/*we aren't passing the currentUser prop because the currentUser now is provided by redux using connect  */}
       
         <Switch>
-          <Suspense fallback={<Spinner/>}>
-            <Route exact path='/' component={HomePage}/>
-            <Route path='/shop' component={ShopPage}/>
-            <Route exact path='/checkout' component={CheckoutPage}/>
-            <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' /> ) : (<SignInSingUpPage/>)} />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Spinner/>}>
+              <Route exact path='/' component={HomePage}/>
+              <Route path='/shop' component={ShopPage}/>
+              <Route exact path='/checkout' component={CheckoutPage}/>
+              <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' /> ) : (<SignInSingUpPage/>)} />
+            </Suspense>
+          </ErrorBoundary>
         </Switch>
       
     </div>
