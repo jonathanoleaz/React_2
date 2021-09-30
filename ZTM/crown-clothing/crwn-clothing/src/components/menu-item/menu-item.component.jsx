@@ -19,7 +19,7 @@ const MenuItem = ({title, imageUrl, size, history, linkUrl, match}) =>(
             }} />
         <div className='content'>
             <h1 className='title'>{title.toUpperCase()}</h1>
-            <span className='subtitle'>Show Now</span>
+            <span className='subtitle'>Show now</span>
         </div>
     </div>
 );
